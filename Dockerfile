@@ -2,9 +2,9 @@
 FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
 
 WORKDIR /build
-RUN chown 1001 /build && chmod 777 /build && chown 1001:root /build
+RUN chown 1001 /build && chmod "g+rwX" /build && chown 1001:root /build
 COPY --chown=1001:root src /build/src
-COPY pom.xml /build
+COPY --chown=1001:root pom.xml /build
 RUN mvn clean package
 
 ############ STAGE:2 : create the docker final image ############
