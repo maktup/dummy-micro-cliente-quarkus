@@ -2,7 +2,7 @@
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
 #FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
-FROM debian-graal as CONSTRUCTOR
+FROM oracle/graalvm-ce as CONSTRUCTOR
 
 #1. CREA DIRECTORIO 'build':  
 RUN mkdir -p /build
@@ -26,7 +26,7 @@ RUN mvn clean package
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
 #FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
-FROM debian-graal as RUNTIME
+FROM oracle/graalvm-ce as RUNTIME
 
 #7. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
