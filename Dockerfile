@@ -15,10 +15,10 @@ WORKDIR /work/
 ENV JAVA_OPTS=""
 
 COPY --from=build /usr/src/app/target/*runner.jar /work/app.jar
-RUN chmod 775 /work
+RUN chmod 777 /work
 EXPOSE 8080
 
 #CMD ["./app.jar", "-Dquarkus.http.host=0.0.0.0"]
 #ENTRYPOINT ["java","-jar","/work/app.jar"]
-ENTRYPOINT [ "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /work/app.jar" ]
+ENTRYPOINT [ "java -Djava.security.egd=file:/dev/./urandom -jar /work/app.jar" ]
 
