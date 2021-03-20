@@ -3,8 +3,8 @@ FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
 
 RUN mkdir -p /build 
 WORKDIR /build
-RUN chmod 777 /build
-COPY src /build/src
+RUN chown 1001 /build && chmod 777 /build && chown 1001:root /build
+COPY --chown=1001:root src /build/src
 COPY pom.xml /build
 RUN mvn clean package
 
