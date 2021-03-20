@@ -3,9 +3,13 @@ WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \
     && chown 1001:root /work
-COPY --chown=1001:root target/*-runner /work/application
+COPY target/*-runner /work/application
 
 EXPOSE 8080
 USER 1001
+
+RUN apk add -u sudo 
+RUN apk add -u nano
+RUN apk add -u curl
 
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]
