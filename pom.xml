@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-	                         http://maven.apache.org/xsd/maven-4.0.0.xsd" >
- 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+	                         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>pe.com.capacitacion.controller</groupId>
-	<artifactId>dummy-micro-cliente-quarkus</artifactId>	
-	<name>dummy-micro-cliente-quarkus</name>
-	<description>dummy-micro-cliente-quarkus</description>
-    <packaging>jar</packaging>
-    <version>1.0.0</version>  
-    
+	<artifactId>dummy-micro-cliente-quarkus</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0.0</version>
+
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	
-		<compiler-plugin.version>3.8.1</compiler-plugin.version>
-		<maven.compiler.parameters>true</maven.compiler.parameters>
+		<surefire-plugin.version>2.22.1</surefire-plugin.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+		<quarkus.platform.version>1.11.0.Final</quarkus.platform.version>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.parameters>true</maven.compiler.parameters>
+		<quarkus-plugin.version>1.11.0.Final</quarkus-plugin.version>
+		<compiler-plugin.version>3.8.1</compiler-plugin.version>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-		<quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
-		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 	</properties>
-    
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -54,21 +52,20 @@
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.10</version>
-		</dependency>	
-		
-	</dependencies>
+		</dependency>
 
+	</dependencies>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -87,6 +84,11 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>io.quarkus</groupId>
+				<artifactId>quarkus-bootstrap-maven-plugin</artifactId>
+				<version>${quarkus-plugin.version}</version>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler-plugin.version}</version>
 			</plugin>
@@ -96,12 +98,13 @@
 				<configuration>
 					<systemPropertyVariables>
 						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
+	
 	<profiles>
 		<profile>
 			<id>native</id>
@@ -124,6 +127,8 @@
 								<configuration>
 									<systemPropertyVariables>
 										<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+										<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+										<maven.home>${maven.home}</maven.home>
 									</systemPropertyVariables>
 								</configuration>
 							</execution>
@@ -136,6 +141,5 @@
 			</properties>
 		</profile>
 	</profiles>
-
+	
 </project>
-
