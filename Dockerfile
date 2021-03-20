@@ -2,7 +2,7 @@
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
 #FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
-FROM ghcr.io/graalvm/graalvm-ce:latest as CONSTRUCTOR
+FROM oracle/graalvm-ce:20.0.0-java8 as CONSTRUCTOR
 
 #1. CREA DIRECTORIO 'build':  
 RUN mkdir -p /build
@@ -14,7 +14,7 @@ WORKDIR /build
 COPY pom.xml /build
 
 #4. DESCARGAR DEPENDENCIAS 'MAVEN': 
-#RUN mvn -B dependency:resolve dependency:resolve-plugins
+RUN mvn -B dependency:resolve dependency:resolve-plugins
 
 #5. COPIAR 'src' A DIRECTORIO '/build/src': 
 COPY src /build/src
@@ -26,7 +26,7 @@ RUN mvn clean package
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
 #FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
-FROM ghcr.io/graalvm/graalvm-ce:latest as RUNTIME
+FROM oracle/graalvm-ce:20.0.0-java8 as RUNTIME
 
 #7. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
