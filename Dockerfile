@@ -20,5 +20,5 @@ EXPOSE 8080
 
 #CMD ["./app.jar", "-Dquarkus.http.host=0.0.0.0"]
 #ENTRYPOINT ["java","-jar","/work/app.jar"]
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /work/app.jar" ]
+ENTRYPOINT [ "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /work/app.jar" ]
 
