@@ -2,7 +2,8 @@
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
 #FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
-FROM debian:9-slim as CONSTRUCTOR
+#FROM debian:9-slim as CONSTRUCTOR
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3 as CONSTRUCTOR
 
 #1. CREA DIRECTORIO 'build':  
 RUN mkdir -p /build
@@ -26,7 +27,7 @@ RUN mvn clean package
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
 #FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
-FROM debian:9-slim as RUNTIME
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3 as RUNTIME
 
 #7. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
