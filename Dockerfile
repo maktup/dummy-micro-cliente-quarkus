@@ -22,4 +22,4 @@ EXPOSE 8080
 #ENTRYPOINT ["java","-jar","/work/app.jar"]
 #ENTRYPOINT [ "java -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]
 
-ENTRYPOINT [ "java -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]
+ENTRYPOINT [ "java -jar app.jar" ]
