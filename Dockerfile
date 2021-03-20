@@ -11,9 +11,14 @@ RUN mvn -f /usr/src/app/pom.xml clean package
 ## Stage 2 : create the docker final image
 FROM registry.access.redhat.com/ubi8/ubi-minimal
 WORKDIR /work/
+
+ENV JAVA_OPTS=""
+
 COPY --from=build /usr/src/app/target/*runner.jar /work/app.jar
 RUN chmod 775 /work
 EXPOSE 8080
 
 #CMD ["./app.jar", "-Dquarkus.http.host=0.0.0.0"]
-ENTRYPOINT ["java","-jar","/work/app.jar"]
+#ENTRYPOINT ["java","-jar","/work/app.jar"]
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /work/app.jar" ]
+
