@@ -1,7 +1,8 @@
 #//----------------------------------------------------------------//#
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
-FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
+#FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
+FROM ghcr.io/graalvm/graalvm-ce:latest as CONSTRUCTOR
 
 #1. CREA DIRECTORIO 'build':  
 RUN mkdir -p /build
@@ -24,7 +25,8 @@ RUN mvn clean package
 #//----------------------------------------------------------------//#
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
-FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
+#FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
+FROM ghcr.io/graalvm/graalvm-ce:latest as RUNTIME
 
 #7. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
@@ -76,5 +78,6 @@ RUN apk add -u nano
 RUN apk add -u curl
 
 #20. EJECUTAR 'JAR': 
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]
+#ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]
+ENTRYPOINT [ "sh", "-c", "java -jar app.jar" ]
 
