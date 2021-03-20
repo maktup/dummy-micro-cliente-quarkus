@@ -3,7 +3,7 @@
 #//----------------------------------------------------------------//#
 #FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
 #FROM debian:9-slim as CONSTRUCTOR
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3 as CONSTRUCTOR
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.1 as CONSTRUCTOR
 
 #1. CREA DIRECTORIO 'build':  
 RUN mkdir -p /build
@@ -15,7 +15,7 @@ WORKDIR /build
 COPY pom.xml /build
 
 #4. DESCARGAR DEPENDENCIAS 'MAVEN': 
-RUN mvn -B dependency:resolve dependency:resolve-plugins
+#RUN mvn -B dependency:resolve dependency:resolve-plugins
 
 #5. COPIAR 'src' A DIRECTORIO '/build/src': 
 COPY src /build/src
@@ -27,7 +27,7 @@ RUN mvn clean package
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
 #FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3 as RUNTIME
+FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME
 
 #7. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
