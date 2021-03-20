@@ -14,7 +14,7 @@ WORKDIR /build
 COPY pom.xml /build
 
 #4. DESCARGAR DEPENDENCIAS 'MAVEN': 
-RUN mvn -B dependency:resolve dependency:resolve-plugins
+#RUN mvn -B dependency:resolve dependency:resolve-plugins
 
 #5. COPIAR 'src' A DIRECTORIO '/build/src': 
 COPY src /build/src
