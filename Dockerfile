@@ -12,7 +12,7 @@ COPY --chown=1001:root src /build/src
 COPY --chown=1001:root pom.xml /build
 
 USER quarkus
-RUN mvn clean package
+RUN mvn -f /build/src/pom.xml clean package
 
 ############ STAGE:2 : create the docker final image ############
 FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
