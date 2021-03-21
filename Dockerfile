@@ -21,7 +21,7 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 EXPOSE 8080
 USER 1001
 
-RUN java -version
+#RUN java -version
 RUN which java
 RUN whereis java
 
