@@ -25,10 +25,10 @@ RUN java -version
 RUN which java
 RUN whereis java
 
-JAVA_HOME='/usr/java/jdk11'
-export JAVA_HOME
-PATH="$JAVA_HOME/bin:$PATH"
-export PATH
+RUN JAVA_HOME='/usr/java/jdk11'
+RUN export JAVA_HOME
+RUN PATH="$JAVA_HOME/bin:$PATH"
+RUN export PATH
  
 RUN echo "ANTES =>: $PATH" 
 RUN PATH=/usr/local/jdk1.8.0/bin:$PATH
