@@ -8,7 +8,7 @@ FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
 WORKDIR /build
 WORKDIR /build/src
 
-#USER root
+USER root
 RUN chown -R quarkus /build
 RUN chmod 775 /build && chown -R 1001 /build && chmod -R "g+rwX" /build && chown -R 1001:root /build
 
