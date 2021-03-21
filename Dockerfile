@@ -7,7 +7,7 @@
 #  openjdk:8-jdk-slim                   284MB 
 #  openjdk:8-jdk-alpine                 105MB 
 #  adoptopenjdk/openjdk8:alpine-slim    90.2MB
-#  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  ???
+#  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  1.96GB
 #-------------- [PESOS DE IMAGENES] -----------#
 
 #//----------------------------------------------------------------//#
@@ -53,12 +53,15 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 #9. IMPRIMIR UBICACION DEL JDK (graalvm): 
 RUN which java && whereis java
 
+#10. SETEA COMO USUARIO 'ROOT': 
 USER root
 
-#10. INSTALANDO 'SUDO, NANO, CURL':
-#RUN yum install nano
-#RUN yum install curl
+#11. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
+RUN yum install sudo -y
+RUN yum install nado -y
+RUN yum install curl -y
+RUN yum install siege -y
 
-#11. LEVANTA EL 'MICROSERVICIO': 
+#12. LEVANTA EL 'MICROSERVICIO': 
 ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
 
