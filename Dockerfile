@@ -31,6 +31,7 @@ COPY pom.xml /build
 #4. COPIA EL DIRECTORIO 'SRC' DENTRO DEL 'CONTENEDOR': 
 COPY src /build/src
  
+USER root
 #5. EJECUTAR 'MAVEN' (RUTA DENTRO EL 'CONTENEDOR'):  
 RUN mvn -f /build/pom.xml clean package
 
@@ -52,6 +53,12 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 #9. IMPRIMIR UBICACION DEL JDK (graalvm): 
 RUN which java && whereis java
 
-#10. LEVANTA EL 'MICROSERVICIO': 
+USER root
+
+#10. INSTALANDO 'SUDO, NANO, CURL':
+#RUN yum install nano
+#RUN yum install curl
+
+#11. LEVANTA EL 'MICROSERVICIO': 
 ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
 
