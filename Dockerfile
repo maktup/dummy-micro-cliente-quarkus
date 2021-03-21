@@ -9,8 +9,8 @@ WORKDIR /build
 WORKDIR /build/src
 
 #USER root
-#RUN chown -R quarkus /build
-#RUN chmod 775 /build && chown -R 1001 /build && chmod -R "g+rwX" /build && chown -R 1001:root /build
+RUN chown -R quarkus /build
+RUN chmod 775 /build && chown -R 1001 /build && chmod -R "g+rwX" /build && chown -R 1001:root /build
 
 COPY --chown=1001:root src /build/src
 COPY --chown=1001:root pom.xml /build
