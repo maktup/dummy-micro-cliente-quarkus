@@ -3,7 +3,7 @@
 IMPORTANTE:
 ----------
 * MICROSERVICIO Dummy para pruebas, que devuelve información básica de CLIENTES.
-* VERSION: 3.0 
+* VERSION: 1.0 
 
 Los LINKs del 'MICROSERVICIO' son:
 ---------------------------------
