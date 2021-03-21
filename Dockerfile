@@ -36,5 +36,5 @@ RUN PATH=/usr/local/jdk1.8.0/bin:$PATH
 RUN export PATH
 RUN echo "DESPUES =>: $PATH" 
 
-#ENTRYPOINT [ "java", "-jar", "app.jar" ]
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT [ "java -jar app.jar" ]
+#CMD ["java", "-jar", "app.jar"]
