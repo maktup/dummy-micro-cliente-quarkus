@@ -21,5 +21,9 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 EXPOSE 8080
 USER 1001
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
-#CMD ["java","-jar","./app.jar"]
+RUN PATH="/opt/bin:$PATH"
+RUN export PATH
+RUN echo "export PATH=$PATH" 
+
+#ENTRYPOINT [ "java", "-jar", "app.jar" ]
+CMD ["java -jar app.jar"]
