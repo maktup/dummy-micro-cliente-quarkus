@@ -21,9 +21,10 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 EXPOSE 8080
 USER 1001
 
-RUN PATH="/opt/bin:$PATH"
+RUN echo "ANTES =>: $PATH" 
+RUN PATH=/usr/local/jdk1.8.0/bin:$PATH
 RUN export PATH
-RUN echo "export PATH=$PATH" 
+RUN echo "DESPUES =>: $PATH" 
 
 #ENTRYPOINT [ "java", "-jar", "app.jar" ]
-CMD ["java -jar app.jar"]
+CMD ["java", "-jar", "app.jar"]
