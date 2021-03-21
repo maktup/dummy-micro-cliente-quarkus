@@ -1,6 +1,7 @@
 ############ STAGE:1 : build with maven builder image with native capabilities ############
 FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
 
+WORKDIR /build
 WORKDIR /build/src
 
 USER root
