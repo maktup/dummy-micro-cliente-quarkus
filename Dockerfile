@@ -1,7 +1,7 @@
 ############ STAGE:1 : build with maven builder image with native capabilities ############
 FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
 
-WORKDIR /build
+WORKDIR /build/src
 
 USER root
 RUN chown -R quarkus /build
@@ -20,5 +20,5 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 EXPOSE 8080
 USER 1001
 
-#ENTRYPOINT [ "sh", "-c", "java -jar app.jar" ]
-CMD ["java","-jar","./app.jar"]
+ENTRYPOINT [ "java -jar app.jar" ]
+#CMD ["java","-jar","./app.jar"]
