@@ -20,4 +20,5 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 EXPOSE 8080
 USER 1001
 
-ENTRYPOINT [ "sh", "-c", "java -jar app.jar" ]
+#ENTRYPOINT [ "sh", "-c", "java -jar app.jar" ]
+CMD ["java","-jar","./app.jar"]
