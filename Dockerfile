@@ -15,7 +15,8 @@ USER quarkus
 RUN mvn -f /build/pom.xml clean package
 
 ############ STAGE:2 : create the docker final image ############
-FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
+## FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
+FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
 
 COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar 
 EXPOSE 8080
