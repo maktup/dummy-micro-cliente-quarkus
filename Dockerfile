@@ -1,63 +1,96 @@
 #-------------- [PESOS DE IMAGENES] -----------#
-#  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  1.96GB
+#  maven:3-jdk-8                        500MB 
+#  maven:3-jdk-8-alpine                 122MB 
+#  openjdk:8                            488MB
+#  openjdk:8-slim                       284MB
+#  openjdk:8-alpine                     105MB
+#  openjdk:8-jdk-slim                   284MB 
+#  openjdk:8-jdk-alpine                 105MB 
+#  adoptopenjdk/openjdk8:alpine-slim    90.2MB
+#  oracle/graalvm-ce                    ???
 #-------------- [PESOS DE IMAGENES] -----------#
+
+#---------> [VERSION-MANEJADA: V3.0]#
 
 #//----------------------------------------------------------------//#
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
-FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as CONSTRUCTOR 
+FROM maven:3-jdk-8-alpine as CONSTRUCTOR 
 
-#1. CREA DIRECTORIO 'build' & 'src': 
+#1. CREA DIRECTORIO 'build':  
+RUN mkdir -p /build
+
+#2. DEFINIR UBICACION: 
 WORKDIR /build
-WORKDIR /build/src
 
-#2. SETEA COMO USUARIO 'ROOT': 
-USER root
-
-#3. BRINDANDO PERMISOS A DIRECTORIO BASE: 
-RUN chown -R quarkus /build && chmod 775 /build && chown -R 1001 /build && chmod -R "g+rwX" /build && chown -R 1001:root /build
-
-#4. COPIA ARCHIVO 'POM.xml' DENTRO DEL 'CONTENEDOR': 
+#3. COPIAR 'pom.xml' A DIRECTORIO 'build': 
 COPY pom.xml /build
 
-#4. COPIA EL DIRECTORIO 'SRC' DENTRO DEL 'CONTENEDOR': 
+#4. DESCARGAR DEPENDENCIAS 'MAVEN': 
+RUN mvn -B dependency:resolve dependency:resolve-plugins
+
+#5. COPIAR 'src' A DIRECTORIO '/build/src': 
 COPY src /build/src
- 
-USER root
-#5. EJECUTAR 'MAVEN' (RUTA DENTRO EL 'CONTENEDOR'):  
-RUN mvn -f /build/pom.xml clean package
+
+#6. EJECUTAR 'MAVEN': 
+RUN mvn clean package
 
 
 #//----------------------------------------------------------------//#
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
-#FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
-FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
-#FROM cescoffier/native-base as RUNTIME    
-    
-#6. DOCUMENTANDO: 
+FROM adoptopenjdk/openjdk8:alpine-slim as RUNTIME
+
+#7. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
 
-#7. EXPONER PUERTO '8080': 
+#8. EXPONER PUERTO '8080': 
 EXPOSE 8080
 
-#8. COPIAR .JAR DE 'COMPILACION' A 'RUNTINE':  
-COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar 
+#9. CREAR 'VARIABLE DE ENTORNO' 'APP_HOME': 
+ENV APP_HOME /app
 
-#9. IMPRIMIR UBICACION DEL JDK (graalvm): 
-#RUN which java && whereis java
 
-#10. SETEA COMO USUARIO 'ROOT': 
-USER root
+#10. CREAR 'VARIABLE DE ENTORNO' [ADICIONALES], PARA EL 'MICROSERVICIO': 
+#--------------------------------------------------------------------------------------------#
+ENV NOMBRE_MICROSERVICIO=dummy-micro-cliente
+#--------------------------------------------------------------------------------------------#
 
-#11. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
-RUN yum install graalvm20-ee-8-20.3.0
-#RUN yum install sudo -y
-#RUN yum install nano -y
-#RUN yum install curl -y
 
-#12. LEVANTA EL 'MICROSERVICIO': 
-ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
+#11. CREAR 'VARIABLE DE ENTORNO' 'JAVA_OPTS':  
+ENV JAVA_OPTS=""
+
+#12. CREANDO DIRECTORIO 'BASE': 
+RUN mkdir $APP_HOME
+
+#13. CREANDO DIRECTORIO PARA 'ARCHIVOS DE CONFIGURACION': 
+RUN mkdir $APP_HOME/config
+
+#14. CREANDO DIRECTORIO PARA 'LOGs': 
+RUN mkdir $APP_HOME/log
+
+#15. CREANDO 'VOLUME' PARA 'ARCHIVOS DE CONFIGURACION': 
+VOLUME $APP_HOME/config
+
+#16. CREANDO 'VOLUME' PARA 'LOGs':  
+VOLUME $APP_HOME/log
+
+
+#17. CREANDO 'VARIABLE DE ENTORNO' PARA 'VOLUME' DE 'LOGs' PARA EL 'MICROSERVICIO':
+#--------------------------------------------------------------------#
+ENV RUTA_LOG=$APP_HOME/log
+#--------------------------------------------------------------------#
+
+
+#18. COPIAR .JAR DE LA IMAGEN:  
+COPY --from=CONSTRUCTOR /build/target/*.jar app.jar
+
+#19. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
+RUN apk add -u sudo 
+RUN apk add -u nano
+RUN apk add -u curl
+RUN apk add -u siege 
+
+#20. EJECUTAR 'JAR': 
+ENTRYPOINT [ "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar app.jar" ]
 
