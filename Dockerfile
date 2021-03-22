@@ -32,7 +32,10 @@ RUN mvn -f /build/pom.xml clean package
 #//----------------------------------------------------------------//#
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
-FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
+#FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
+#FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
+#FROM cescoffier/native-base as RUNTIME    
     
 #6. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
