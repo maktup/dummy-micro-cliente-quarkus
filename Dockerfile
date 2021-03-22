@@ -1,12 +1,4 @@
 #-------------- [PESOS DE IMAGENES] -----------#
-#  maven:3-jdk-8                        500MB 
-#  maven:3-jdk-8-alpine                 122MB 
-#  openjdk:8                            488MB
-#  openjdk:8-slim                       284MB
-#  openjdk:8-alpine                     105MB
-#  openjdk:8-jdk-slim                   284MB 
-#  openjdk:8-jdk-alpine                 105MB 
-#  adoptopenjdk/openjdk8:alpine-slim    90.2MB
 #  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  1.96GB
 #-------------- [PESOS DE IMAGENES] -----------#
 
@@ -14,7 +6,7 @@
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
 #FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
-FROM softinstigate/graalvm-maven:latest as CONSTRUCTOR
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as CONSTRUCTOR 
 
 #1. CREA DIRECTORIO 'build' & 'src': 
 WORKDIR /build
@@ -40,9 +32,8 @@ RUN mvn -f /build/pom.xml clean package
 #//----------------------------------------------------------------//#
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
-FROM softinstigate/graalvm-maven:latest as as RUNTIME 
-
+FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
+    
 #6. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
 
