@@ -53,6 +53,7 @@ COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar
 USER root
 
 #11. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
+RUN yum install graalvm20-ee-8-20.3.0
 #RUN yum install sudo -y
 #RUN yum install nano -y
 #RUN yum install curl -y
