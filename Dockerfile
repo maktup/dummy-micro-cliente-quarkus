@@ -54,7 +54,7 @@ USER root
 
 #11. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
 RUN yum install sudo -y
-RUN yum install nado -y
+RUN yum install nano -y
 RUN yum install curl -y
 RUN yum install siege -y
 
