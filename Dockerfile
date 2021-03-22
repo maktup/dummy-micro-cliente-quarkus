@@ -33,8 +33,8 @@ RUN mvn -f /build/pom.xml clean package
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
 #FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
-FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
-#FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
+#FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
+FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
 #FROM cescoffier/native-base as RUNTIME    
     
 #6. DOCUMENTANDO: 
@@ -53,9 +53,9 @@ RUN which java && whereis java
 USER root
 
 #11. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
-RUN yum install sudo -y
-RUN yum install nano -y
-RUN yum install curl -y
+#RUN yum install sudo -y
+#RUN yum install nano -y
+#RUN yum install curl -y
 
 #12. LEVANTA EL 'MICROSERVICIO': 
 ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
