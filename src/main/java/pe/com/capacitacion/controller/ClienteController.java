@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import pe.com.capacitacion.service.ClienteService;
+import javax.inject.Inject;
 
 @Slf4j  //Autogenerar LOG4J. 
 @Path( "/dummy-micro-cliente" )
@@ -22,6 +24,9 @@ public class ClienteController {
     private List<String> listaClientes  = new ArrayList<String>();  
     private String       vCadenaReplace = "XXX";
 
+    @Inject
+    private ClienteService clienteService;
+    
    /** 
     * consultarClientesPorId	
     * @param  id
@@ -35,28 +40,9 @@ public class ClienteController {
 
 		   String objResponseMsg = "";
 		   
-		   try{
-			   this.listaClientes.add( this.vClientes_01 );	   
-			   this.listaClientes.add( this.vClientes_02 );
-			   this.listaClientes.add( this.vClientes_03 );
-			   
-			   String vDatoJson = "";
-			   for( int i=0; i<this.listaClientes.size(); i++ ){	        	   
-				   if( (i+1) == id ){
-					   vDatoJson = this.listaClientes.get( i ); 
-					   break; 
-				   }  
-			   }
-			   
-			   objResponseMsg = vDatoJson;				   
-			   objResponseMsg = ( objResponseMsg.replaceAll( this.vCadenaReplace, Response.Status.OK + "" ) ); 
- 
-			   return Response.ok( objResponseMsg ).build();
-			  
-			   //Thread.sleep( 1000 * 5 ); //SOLO PARA PRUEBAS
-			   //objResponseMsg = "Se encontro el ERROR: [" + Response.Status.INTERNAL_SERVER_ERROR + "]"; 
-	 
-			   //return Response.status( Response.Status.INTERNAL_SERVER_ERROR ).entity( objResponseMsg ).build(); //SOLO PARA PRUEBAS
+		   try{ 
+			   Response procesarService = this.clienteService.procesarService( this.listaClientes, this.vClientes_01, this.vClientes_02, this.vClientes_03, id, objResponseMsg, this.vCadenaReplace );			   
+			   return procesarService;
 		   }
 		   catch( Exception e ) { 
 			      e.printStackTrace();
