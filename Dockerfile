@@ -56,6 +56,7 @@ USER root
 RUN yum install sudo -y
 RUN yum install nano -y
 RUN yum install curl -y
+RUN yum update -y
 RUN yum install siege -y
 
 #12. LEVANTA EL 'MICROSERVICIO': 
