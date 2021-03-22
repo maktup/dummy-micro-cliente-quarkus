@@ -1,12 +1,15 @@
 package pe.com.capacitacion.service;
 
 import java.util.List;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.core.Response;
 
 /**
  * ClienteService 
  * @author cguerra
  **/
+ @ApplicationScoped
  public class ClienteService{
 
   	   /**
