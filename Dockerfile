@@ -47,7 +47,7 @@ EXPOSE 8080
 COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar 
 
 #9. IMPRIMIR UBICACION DEL JDK (graalvm): 
-RUN which java && whereis java
+#RUN which java && whereis java
 
 #10. SETEA COMO USUARIO 'ROOT': 
 USER root
