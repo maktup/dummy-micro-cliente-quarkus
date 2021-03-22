@@ -1,11 +1,11 @@
 #-------------- [PESOS DE IMAGENES] -----------#
-#  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  1.96GB
+#  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  1.9GB
+#  quay.io/quarkus/centos-quarkus-maven:19.2.0         1.5GB
 #-------------- [PESOS DE IMAGENES] -----------#
 
 #//----------------------------------------------------------------//#
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as CONSTRUCTOR
 FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as CONSTRUCTOR 
 
 #1. CREA DIRECTORIO 'build' & 'src': 
@@ -32,10 +32,7 @@ RUN mvn -f /build/pom.xml clean package
 #//----------------------------------------------------------------//#
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:21.0.0-java11 as RUNTIME 
-#FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
-FROM registry.access.redhat.com/ubi8/ubi-minimal as RUNTIME 
-#FROM cescoffier/native-base as RUNTIME    
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
     
 #6. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
@@ -47,16 +44,15 @@ EXPOSE 8080
 COPY --from=CONSTRUCTOR /build/target/*runner.jar app.jar 
 
 #9. IMPRIMIR UBICACION DEL JDK (graalvm): 
-#RUN which java && whereis java
+RUN which java && whereis java
 
 #10. SETEA COMO USUARIO 'ROOT': 
 USER root
 
 #11. INSTALANDO 'SUDO, NANO, CURL, SIEGE':
-RUN yum install graalvm20-ee-8-20.3.0 -y
-#RUN yum install sudo -y
-#RUN yum install nano -y
-#RUN yum install curl -y
+RUN yum install sudo -y
+RUN yum install nano -y
+RUN yum install curl -y
 
 #12. LEVANTA EL 'MICROSERVICIO': 
 ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
