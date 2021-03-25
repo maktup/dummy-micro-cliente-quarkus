@@ -1,14 +1,12 @@
 #-------------- [PESOS DE IMAGENES] -----------#
 #  quay.io/quarkus/centos-quarkus-maven:21.0.0-java11  1.9GB
 #  quay.io/quarkus/centos-quarkus-maven:19.2.0         1.5GB
-#  jycr/maven-graalvm:3-jdk-11                         1.81GB
 #-------------- [PESOS DE IMAGENES] -----------#
 
 #//----------------------------------------------------------------//#
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as CONSTRUCTOR 
-FROM infinitenature/maven-graalvm-r:latest as CONSTRUCTOR 
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as CONSTRUCTOR 
 
 #1. CREA DIRECTORIO 'build' & 'src': 
 WORKDIR /build
@@ -34,8 +32,7 @@ RUN mvn -f /build/pom.xml clean package
 #//----------------------------------------------------------------//#
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
-#FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
-FROM infinitenature/maven-graalvm-r:latest as RUNTINE
+FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
     
 #6. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
