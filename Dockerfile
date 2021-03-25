@@ -8,7 +8,9 @@
 #//------------------------  [COMPILACION] ------------------------//#
 #//----------------------------------------------------------------//#
 #FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as CONSTRUCTOR 
-FROM infinitenature/maven-graalvm-r:latest as CONSTRUCTOR 
+#FROM infinitenature/maven-graalvm-r:latest as CONSTRUCTOR 
+FROM ghcr.io/graalvm/graalvm-ce:latest as CONSTRUCTOR 
+
 
 #1. CREA DIRECTORIO 'build' & 'src': 
 WORKDIR /build
@@ -35,8 +37,9 @@ RUN mvn -f /build/pom.xml clean package
 #//-------------------------  [EJECUCION] -------------------------//#
 #//----------------------------------------------------------------//#
 #FROM quay.io/quarkus/centos-quarkus-maven:19.2.0 as RUNTIME 
-FROM infinitenature/maven-graalvm-r:latest as RUNTINE
-    
+#FROM infinitenature/maven-graalvm-r:latest as RUNTINE
+FROM ghcr.io/graalvm/graalvm-ce:latest as RUNTIME 
+ 
 #6. DOCUMENTANDO: 
 MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
 
