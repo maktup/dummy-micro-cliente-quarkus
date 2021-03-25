@@ -18,7 +18,7 @@ WORKDIR /build/src
 USER root
 
 #3. BRINDANDO PERMISOS A DIRECTORIO BASE: 
-RUN chown -R quarkus /build && chmod 775 /build && chown -R 1001 /build && chmod -R "g+rwX" /build && chown -R 1001:root /build
+#RUN chown -R quarkus /build && chmod 775 /build && chown -R 1001 /build && chmod -R "g+rwX" /build && chown -R 1001:root /build
 
 #4. COPIA ARCHIVO 'POM.xml' DENTRO DEL 'CONTENEDOR': 
 COPY pom.xml /build
