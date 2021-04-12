@@ -35,4 +35,4 @@ RUN mvn -f /build/pom.xml clean package
 EXPOSE 8080
 
 #10. LEVANTA EL 'MICROSERVICIO': 
-ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "*runner.jar" ]
+ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "dummy-micro-cliente-quarkus-1.0.0-runner.jar" ]
