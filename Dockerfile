@@ -34,7 +34,8 @@ MAINTAINER cesar guerra cesarricardo_guerra19@hotmail.com
 EXPOSE 8080
 
 #9. COPIAR .JAR DE 'COMPILACION' A 'RUNTINE':  
-COPY /build/target/*runner.jar app.jar
+#COPY /build/target/*runner.jar app.jar
+#COPY /build/target/*dummy-micro-cliente-quarkus-1.0.0-runner.jar
 
 #10. LEVANTA EL 'MICROSERVICIO': 
-ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
+ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "dummy-micro-cliente-quarkus-1.0.0-runner.jar" ]
