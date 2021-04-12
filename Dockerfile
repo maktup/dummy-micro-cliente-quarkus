@@ -22,12 +22,14 @@ COPY src /build/src
 #7. EJECUTAR 'MAVEN' (RUTA DENTRO EL 'CONTENEDOR'):  
 RUN mvn -f /build/pom.xml clean package
 
-
-COPY /build/target/dummy-micro-cliente-quarkus-1.0.0-runner.jar app.jar 
+USER root
+#COPY /build/target/*runner.jar /app.jar 
 
 
 #9. EXPONER PUERTO '8080': 
 EXPOSE 8080
 
 #10. LEVANTA EL 'MICROSERVICIO': 
-ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
+#ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar" ]
+ENTRYPOINT [ "java", "-jar", "/build/target/*runner.jar" ]
+
