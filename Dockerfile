@@ -17,7 +17,7 @@ WORKDIR /build
 COPY pom.xml /build
 
 #6. COPIAR EL DIRECTORIO 'SRC' (DENTRO DEL CONTENEDOR): 
-WORKDIR /build/src
+RUN mkdir -p /build/src
 COPY src /build/src
 
 #7. EJECUTAR 'MAVEN' (DENTRO DEL CONTENEDOR):  
