@@ -12,12 +12,17 @@ RUN mvn -ver
 
 #4. CREAR 'DIRECTORIOS' (DENTRO DEL CONTENEDOR): 
 WORKDIR /build
+WORKDIR /build/src
+WORKDIR /build/target
+
+RUN mkdir -p /build
+RUN mkdir -p /build/src
+RUN mkdir -p /build/target
 
 #5. COPIAR ARCHIVO 'POM.xml' (DENTRO DEL CONTENEDOR): 
 COPY pom.xml /build
 
 #6. COPIAR EL DIRECTORIO 'SRC' (DENTRO DEL CONTENEDOR): 
-RUN mkdir -p /build/src
 COPY src /build/src
 
 #7. EJECUTAR 'MAVEN' (DENTRO DEL CONTENEDOR):  
@@ -27,8 +32,6 @@ RUN mvn -f /build/pom.xml clean package
 EXPOSE 8080
 
 #9. RENOMBRAR 'COMPILADO' (DENTRO DEL CONTENEDOR): 
-WORKDIR /build/target
-
 RUN cp dummy-micro-cliente-quarkus-1.0.0-runner.jar app.jar
 RUN rm dummy-micro-cliente-quarkus-1.0.0-runner.jar
 
